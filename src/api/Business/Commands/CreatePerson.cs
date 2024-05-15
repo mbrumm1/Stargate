@@ -36,6 +36,7 @@ namespace StargateAPI.Business.Commands
         {
             _context = context;
         }
+
         public async Task<CreatePersonResult> Handle(CreatePerson request, CancellationToken cancellationToken)
         {
 

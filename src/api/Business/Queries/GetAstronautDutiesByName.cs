@@ -25,15 +25,40 @@ namespace StargateAPI.Business.Queries
 
             var result = new GetAstronautDutiesByNameResult();
 
-            var query = $"SELECT a.Id as PersonId, a.Name, b.CurrentRank, b.CurrentDutyTitle, b.CareerStartDate, b.CareerEndDate FROM [Person] a LEFT JOIN [AstronautDetail] b on b.PersonId = a.Id WHERE \'{request.Name}\' = a.Name";
+            var query = $@"
+                SELECT 
+                    a.Id as PersonId, 
+                    a.Name, 
+                    b.CurrentRank, 
+                    b.CurrentDutyTitle, 
+                    b.CareerStartDate, 
+                    b.CareerEndDate 
+                FROM [Person] a 
+                LEFT JOIN [AstronautDetail] b 
+                    on b.PersonId = a.Id WHERE a.Name = @Name";
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query);
+            var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query, new { request.Name });
+
+            if (person is null)
+            {
+                throw new BadHttpRequestException("Bad Request");
+            }
 
             result.Person = person;
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.PersonId} = PersonId Order By DutyStartDate Desc";
+            query = $@"
+                SELECT 
+                    Id,
+                    PersonId,
+                    Rank,
+                    DutyTitle,
+                    DutyStartDate,
+                    DutyEndDate
+                FROM [AstronautDuty] 
+                WHERE PersonId = @PersonId
+                ORDER BY DutyStartDate DESC";
 
-            var duties = await _context.Connection.QueryAsync<AstronautDuty>(query);
+            var duties = await _context.Connection.QueryAsync<AstronautDuty>(query, new { person.PersonId });
 
             result.AstronautDuties = duties.ToList();
 
@@ -44,7 +69,7 @@ namespace StargateAPI.Business.Queries
 
     public class GetAstronautDutiesByNameResult : BaseResponse
     {
-        public PersonAstronaut Person { get; set; }
+        public PersonAstronaut Person { get; set; } = new PersonAstronaut();
         public List<AstronautDuty> AstronautDuties { get; set; } = new List<AstronautDuty>();
     }
 }

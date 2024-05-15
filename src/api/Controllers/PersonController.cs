@@ -22,11 +22,7 @@ namespace StargateAPI.Controllers
         {
             try
             {
-                var result = await _mediator.Send(new GetPeople()
-                {
-
-                });
-
+                var result = await _mediator.Send(new GetPeople());
                 return this.GetResponse(result);
             }
             catch (Exception ex)
@@ -84,7 +80,30 @@ namespace StargateAPI.Controllers
                     ResponseCode = (int)HttpStatusCode.InternalServerError
                 });
             }
+        }
 
+        [HttpPut("{name}")]
+        public async Task<IActionResult> UpdatePerson(string name, [FromBody] string newName)
+        {
+            try
+            {
+                var result = await _mediator.Send(new UpdatePerson()
+                {
+                    Name = name,
+                    NewName = newName
+                });
+
+                return this.GetResponse(result);
+            }
+            catch (Exception ex)
+            {
+                return this.GetResponse(new BaseResponse()
+                {
+                    Message = ex.Message,
+                    Success = false,
+                    ResponseCode = (int)HttpStatusCode.InternalServerError
+                });
+            }
         }
     }
 }

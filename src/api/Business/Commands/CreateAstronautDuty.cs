@@ -4,7 +4,6 @@ using MediatR.Pipeline;
 using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
 using StargateAPI.Controllers;
-using System.Net;
 
 namespace StargateAPI.Business.Commands
 {
@@ -53,28 +52,34 @@ namespace StargateAPI.Business.Commands
         public async Task<CreateAstronautDutyResult> Handle(CreateAstronautDuty request, CancellationToken cancellationToken)
         {
 
-            var query = $"SELECT * FROM [Person] WHERE \'{request.Name}\' = Name";
+           // Removed interpolated string that allowed for SQL injection attacks.
+           var query = "SELECT Id, Name FROM [Person] WHERE Name = @Name";           
+           var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query, new { request.Name });
 
-            var person = await _context.Connection.QueryFirstOrDefaultAsync<Person>(query);
+            if (person is null)
+            {
+                throw new BadHttpRequestException("Bad Request");
+            }
 
-            query = $"SELECT * FROM [AstronautDetail] WHERE {person.Id} = PersonId";
-
-            var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query);
-
-            if (astronautDetail == null)
+            query = "SELECT Id, PersonId, CurrentRank, CurrentDutyTitle, CareerStartDate, CareerEndDate FROM [AstronautDetail] WHERE PersonId = @Id";
+            var astronautDetail = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDetail>(query, new { person.Id });
+            
+            if (astronautDetail is null)
             {
                 astronautDetail = new AstronautDetail();
                 astronautDetail.PersonId = person.Id;
                 astronautDetail.CurrentDutyTitle = request.DutyTitle;
                 astronautDetail.CurrentRank = request.Rank;
                 astronautDetail.CareerStartDate = request.DutyStartDate.Date;
+
                 if (request.DutyTitle == "RETIRED")
                 {
+                    // TODO: If a person goes straight into retirement, should they even be considered an astronaut?
+                    // Should they their career end date still be one day before the retired duty start date?
                     astronautDetail.CareerEndDate = request.DutyStartDate.Date;
                 }
 
                 await _context.AstronautDetails.AddAsync(astronautDetail);
-
             }
             else
             {
@@ -87,12 +92,24 @@ namespace StargateAPI.Business.Commands
                 _context.AstronautDetails.Update(astronautDetail);
             }
 
-            query = $"SELECT * FROM [AstronautDuty] WHERE {person.Id} = PersonId Order By DutyStartDate Desc";
+            query = $@"
+                SELECT 
+                    Id, 
+                    PersonId, 
+                    Rank, 
+                    DutyTitle, 
+                    DutyStartDate, 
+                    DutyEndDate 
+                FROM [AstronautDuty] 
+                WHERE PersonId = @Id
+                ORDER BY DutyStartDate DESC;";
 
-            var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query);
+            var astronautDuty = await _context.Connection.QueryFirstOrDefaultAsync<AstronautDuty>(query, new { person.Id });
 
             if (astronautDuty != null)
             {
+                // TODO: What if someone adds a duty with the same start date of a previous duty, but different title?
+                // What
                 astronautDuty.DutyEndDate = request.DutyStartDate.AddDays(-1).Date;
                 _context.AstronautDuties.Update(astronautDuty);
             }
@@ -107,7 +124,6 @@ namespace StargateAPI.Business.Commands
             };
 
             await _context.AstronautDuties.AddAsync(newAstronautDuty);
-
             await _context.SaveChangesAsync();
 
             return new CreateAstronautDutyResult()

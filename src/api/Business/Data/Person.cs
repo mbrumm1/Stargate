@@ -22,6 +22,7 @@ namespace StargateAPI.Business.Data
         public void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.Name).IsUnique();
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.HasOne(z => z.AstronautDetail).WithOne(z => z.Person).HasForeignKey<AstronautDetail>(z => z.PersonId);
             builder.HasMany(z => z.AstronautDuties).WithOne(z => z.Person).HasForeignKey(z => z.PersonId);
