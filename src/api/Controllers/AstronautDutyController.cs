@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
-using System.Net;
 
 namespace StargateAPI.Controllers
 {
@@ -30,20 +29,15 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }            
         }
 
         [HttpPost("")]
         public async Task<IActionResult> CreateAstronautDuty([FromBody] CreateAstronautDuty request)
         {
-                var result = await _mediator.Send(request);
-                return this.GetResponse(result);           
+            var result = await _mediator.Send(request);
+            return this.GetResponse(result);           
         }
     }
 }

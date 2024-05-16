@@ -109,7 +109,6 @@ namespace StargateAPI.Business.Commands
             if (astronautDuty != null)
             {
                 // TODO: What if someone adds a duty with the same start date of a previous duty, but different title?
-                // What
                 astronautDuty.DutyEndDate = request.DutyStartDate.AddDays(-1).Date;
                 _context.AstronautDuties.Update(astronautDuty);
             }

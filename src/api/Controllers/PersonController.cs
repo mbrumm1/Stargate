@@ -27,12 +27,7 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
 
@@ -50,12 +45,7 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
 
@@ -73,12 +63,7 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
 
@@ -97,12 +82,7 @@ namespace StargateAPI.Controllers
             }
             catch (Exception ex)
             {
-                return this.GetResponse(new BaseResponse()
-                {
-                    Message = ex.Message,
-                    Success = false,
-                    ResponseCode = (int)HttpStatusCode.InternalServerError
-                });
+                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
     }
