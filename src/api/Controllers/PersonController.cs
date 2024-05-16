@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
 using System.Net;
+using System.Xml.Linq;
 
 namespace StargateAPI.Controllers
 {
@@ -12,9 +13,12 @@ namespace StargateAPI.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public PersonController(IMediator mediator)
+        private readonly ILogger<PersonController> _logger;
+
+        public PersonController(IMediator mediator, ILogger<PersonController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet("")]
@@ -23,10 +27,12 @@ namespace StargateAPI.Controllers
             try
             {
                 var result = await _mediator.Send(new GetPeople());
+                _logger.LogInformation("Successfully retrieved all people");
                 return this.GetResponse(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to retrieve all people");
                 return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
@@ -36,15 +42,13 @@ namespace StargateAPI.Controllers
         {
             try
             {
-                var result = await _mediator.Send(new GetPersonByName()
-                {
-                    Name = name
-                });
-
+                var result = await _mediator.Send(new GetPersonByName() { Name = name });
+                _logger.LogInformation("Successfully retrieved person: {Name}", name);
                 return this.GetResponse(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to get person by name: {Name}", name);
                 return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
@@ -54,15 +58,13 @@ namespace StargateAPI.Controllers
         {
             try
             {
-                var result = await _mediator.Send(new CreatePerson()
-                {
-                    Name = name
-                });
-
+                var result = await _mediator.Send(new CreatePerson() { Name = name });
+                _logger.LogInformation("Successfully created person named {Name} (ID: {Id})", name, result.Id);
                 return this.GetResponse(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to create person by name: {Name}", name);
                 return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
@@ -77,11 +79,12 @@ namespace StargateAPI.Controllers
                     Name = name,
                     NewName = newName
                 });
-
+                _logger.LogInformation("Successfully updated person from namer {Name}, to {NewName}", name, newName);
                 return this.GetResponse(result);
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to update person by name: from {Name}, to {NewName}", name, newName);
                 return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
             }
         }
