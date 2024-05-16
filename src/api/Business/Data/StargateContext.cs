@@ -18,9 +18,7 @@ namespace StargateAPI.Business.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(StargateContext).Assembly);
-
-            //SeedData(modelBuilder);
-
+            SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
 

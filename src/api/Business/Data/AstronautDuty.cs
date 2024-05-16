@@ -30,4 +30,9 @@ namespace StargateAPI.Business.Data
             builder.Property(x => x.Id).ValueGeneratedOnAdd();            
         }
     }
+
+    public class SpecialDutyTitles
+    {
+        public const string Retired = "RETIRED";
+    }
 }

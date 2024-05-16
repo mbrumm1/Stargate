@@ -16,7 +16,7 @@ namespace StargateAPI.Controllers
         }
 
         [HttpGet("{name}")]
-        public async Task<IActionResult> GetAstronautDutiesByName(string name)
+        public async Task<ActionResult<GetAstronautDutiesByNameResult>> GetAstronautDutiesByName(string name)
         {
             try
             {
@@ -25,19 +25,26 @@ namespace StargateAPI.Controllers
                     Name = name
                 });
 
-                return this.GetResponse(result);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                return this.GetResponse(BaseResponse.InternalServerError(ex.Message));
+                return StatusCode(500, BaseResponse.InternalServerError(ex.Message));                
             }            
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> CreateAstronautDuty([FromBody] CreateAstronautDuty request)
+        public async Task<ActionResult<CreateAstronautDutyResult>> CreateAstronautDuty([FromBody] CreateAstronautDuty request)
         {
-            var result = await _mediator.Send(request);
-            return this.GetResponse(result);           
+            try
+            {
+                var result = await _mediator.Send(request);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, BaseResponse.InternalServerError(ex.Message));
+            }
         }
     }
 }

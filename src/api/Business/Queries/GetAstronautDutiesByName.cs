@@ -1,8 +1,10 @@
 ﻿using Dapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
 using StargateAPI.Business.Dtos;
 using StargateAPI.Controllers;
+using System.Runtime.InteropServices;
 
 namespace StargateAPI.Business.Queries
 {
@@ -37,6 +39,7 @@ namespace StargateAPI.Business.Queries
                 LEFT JOIN [AstronautDetail] b 
                     on b.PersonId = a.Id WHERE a.Name = @Name";
 
+            var people = await _context.People.ToListAsync();
             var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query, new { request.Name });
 
             if (person is null)
@@ -59,11 +62,8 @@ namespace StargateAPI.Business.Queries
                 ORDER BY DutyStartDate DESC";
 
             var duties = await _context.Connection.QueryAsync<AstronautDuty>(query, new { person.PersonId });
-
             result.AstronautDuties = duties.ToList();
-
             return result;
-
         }
     }
 

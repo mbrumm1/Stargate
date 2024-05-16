@@ -72,7 +72,7 @@ namespace StargateAPI.Business.Commands
                 astronautDetail.CurrentRank = request.Rank;
                 astronautDetail.CareerStartDate = request.DutyStartDate.Date;
 
-                if (request.DutyTitle == "RETIRED")
+                if (request.DutyTitle == SpecialDutyTitles.Retired)
                 {
                     // TODO: If a person goes straight into retirement, should they even be considered an astronaut?
                     // Should they their career end date still be one day before the retired duty start date?
@@ -85,7 +85,7 @@ namespace StargateAPI.Business.Commands
             {
                 astronautDetail.CurrentDutyTitle = request.DutyTitle;
                 astronautDetail.CurrentRank = request.Rank;
-                if (request.DutyTitle == "RETIRED")
+                if (request.DutyTitle == SpecialDutyTitles.Retired)
                 {
                     astronautDetail.CareerEndDate = request.DutyStartDate.AddDays(-1).Date;
                 }
