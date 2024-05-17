@@ -1,0 +1,44 @@
+:host {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+  gap: 3rem;
+  background-color: #FFFBFA;
+  min-height: 200vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  max-height: 100svh;
+  background-color: #49C6E5;
+  padding: 5rem;
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: center;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;  
+  gap: 2rem;
+  list-style: none;
+}
+
+:host main { 
+  width: 100%;
+  padding: 3rem;
+}
+
+a {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: black;
+}
+
+a.active {
+  background-color: #54DEFD;
+}
