@@ -1,0 +1,59 @@
+:host {
+  display: grid;
+  grid-template-rows: 5rem 1fr;
+  background-color: var(--background-color);
+  gap: 3rem;
+  align-items: center;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  background-color: var(--primary-color);
+  padding: 2rem;
+  font-size: 1.25rem;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+:host main { 
+  width: 70%;
+  padding: 3rem;
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 492px) {
+  .sidebar {
+    gap: 0rem;
+  }
+
+  .nav-list {
+    gap: 1rem;
+  }
+
+  :host main {
+    width: 100%;
+    padding: 0.25rem;
+  }
+}
+
+a {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: black;
+}
+
+a.active {
+  background-color: var(--secondary-color);
+}

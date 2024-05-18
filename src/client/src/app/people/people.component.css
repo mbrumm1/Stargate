@@ -62,6 +62,10 @@
   .btn-person-view {
     align-self: center;
   }
+
+  table {
+    font-size: var(--small-screen-small-text);
+  }
 }
 
 .profile-image {

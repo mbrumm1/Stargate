@@ -1,3 +1,13 @@
+:root {
+  --primary-color: #49C6E5;
+  --secondary-color: #54DEFD;
+  --background-color: #FFFBFA;
+  --success-color: #00BD9D;
+  --error-color: #bd003f;
+  --small-screen-small-text: 0.8rem;
+  --small-screen-large-text: 1rem;
+}
+
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -13,7 +23,7 @@ html {
 }
 
 body {
-  background-color: #FFFBFA;
+  background-color: var(--background-color);
 }
 
 label {
@@ -36,7 +46,7 @@ button {
 }
 
 button {
-  background-color: #00BD9D;
+  background-color: var(--success-color);
 }
 
 .btn {
@@ -45,7 +55,7 @@ button {
 
 .error-message {
   width: 100%;
-  background-color: #bd003f;
+  background-color: var(--error-color);
   border-radius: 8px;
   color: white;
   padding: 25px;
@@ -53,7 +63,7 @@ button {
 }
 
 .input-error-message {
-  color: #bd003f;
+  color: var(--error-color);
 }
 
 table {
