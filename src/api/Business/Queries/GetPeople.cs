@@ -32,7 +32,9 @@ namespace StargateAPI.Business.Queries
                     b.CareerEndDate 
                 FROM [Person] a 
                 LEFT JOIN [AstronautDetail] b 
-                    on b.PersonId = a.Id";
+                    on b.PersonId = a.Id
+                ORDER BY
+                    a.Name";
 
             var people = await _context.Connection.QueryAsync<PersonAstronaut>(query);
 

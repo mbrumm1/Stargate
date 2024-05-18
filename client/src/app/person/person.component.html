@@ -1,0 +1,48 @@
+<div class="person">
+  <div class="profile-image"></div>
+  <div class="profile-info">
+    <h3 class="person-name">{{person.name}}</h3>
+    @if (person.currentDutyTitle.length > 0) {
+    <div class="profile-info-items">
+      <div class="astronaut-item">
+        <div class="bold">Rank</div>
+        <div>{{person.currentRank}}</div>
+      </div>
+      <div class="astronaut-item">
+        <div class="bold">Title</div>
+        <div>{{person.currentDutyTitle}}</div>
+      </div>
+      <div class="astronaut-item">
+        <div class="bold">Career Start Date</div>
+        <div>{{person.careerStartDate | date }}</div>
+      </div>
+      <div class="astronaut-item">
+        <div class="bold">Career End Date</div>
+        <div>{{person.careerEndDate}}</div>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+<h3>Astronaut Duties</h3>
+<a [routerLink]="['/add-duty', person.name]">Add Duty</a>
+<table class="astronaut-duties table-striped">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Title</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (duty of duties; track duty.id) {
+      <tr>        
+        <td>{{duty.rank}}</td>
+        <td>{{duty.dutyTitle}}</td>
+        <td>{{duty.dutyStartDate | date}}</td>
+        <td>{{duty.dutyEndDate | date}}</td>
+      </tr>
+    }
+  </tbody>
+</table>

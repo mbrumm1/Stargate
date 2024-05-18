@@ -1,0 +1,10 @@
+<h1>Add Person</h1>
+<form class="input-form" (ngSubmit)="addPerson()">
+  <label for="name">Name</label>
+  <input id="name" name="name" #nameControl="ngModel" required [(ngModel)]="name" type="text" placeholder="Ex: John Doe" />
+  <div class="input-error-message" *ngIf="nameControl.invalid && nameControl.touched">Name is required.</div>
+  <button type="submit" class="btn" [disabled]="nameControl.invalid">Submit</button>
+</form>
+<div class="error-message" *ngIf="errorOccurred">
+  An error has occurred: {{ errorMessage }}
+</div>

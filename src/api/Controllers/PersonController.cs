@@ -65,7 +65,7 @@ namespace StargateAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Failed to create person by name: {Name}", name);
-                return StatusCode(500, BaseResponse.InternalServerError(ex.Message));
+                return BadRequest(BaseResponse.InternalServerError(ex.Message));
             }
         }
 

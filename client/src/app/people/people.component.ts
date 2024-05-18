@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { PersonService } from './person.service';
-import { PersonAstronaut } from './person.model';
+import { PersonService } from '../person.service';
+import { PersonAstronaut } from '../models';
+import { DatePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'bam-people',
   standalone: true,
-  imports: [],
+  imports: [DatePipe, RouterLink],
   templateUrl: './people.component.html',
   styleUrl: './people.component.css'
 })
@@ -17,10 +19,8 @@ export class PeopleComponent {
 
   ngOnInit() {
     this.personService.getPeople()
-      .subscribe(data => {
-        console.log(data);
-        console.log("value: ", data.value);
-        this.people = data.value
+      .subscribe(data => {        
+        this.people = data.people
       });
   }
 }

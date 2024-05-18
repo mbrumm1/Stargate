@@ -7,3 +7,84 @@
 html {
   font-family: "Poppins", Helvetica, sans-serif;
 }
+
+.bold {
+  font-weight: bold;
+}
+
+body {
+  background-color: #FFFBFA;
+}
+
+label {
+  font-size: 1.1rem;
+}
+
+input,
+button {
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 5px 5px hsla(0, 0%, 0%, 0.2);
+  cursor: pointer;
+  border: none;
+  border: none;
+  min-width: 12rem;
+  max-height: 4rem;
+  min-height: 4rem;
+}
+
+button {
+  background-color: #00BD9D;
+}
+
+.btn {
+  
+}
+
+.error-message {
+  width: 100%;
+  background-color: #bd003f;
+  border-radius: 8px;
+  color: white;
+  padding: 25px;
+  margin: 8px 0;
+}
+
+.input-error-message {
+  color: #bd003f;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.5rem;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.input-form label, .input-form input {
+  width: 100%;
+}
+
+.input-form label {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.input-form input {
+  padding: 12px;
+  border-radius: 8px;
+}

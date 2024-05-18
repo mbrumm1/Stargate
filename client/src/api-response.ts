@@ -1,6 +1,5 @@
-export interface ApiResponse<T> {
+export type ApiResponse<T, PropertyName extends string> = {
   success: boolean;
   message: string;
   responseCode: number;
-  value: T;
-}
+} & { [P in PropertyName]: T }

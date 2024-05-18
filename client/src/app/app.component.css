@@ -1,7 +1,6 @@
 :host {
   display: grid;
   grid-template-columns: 20rem 1fr;
-  gap: 3rem;
   background-color: #FFFBFA;
   min-height: 200vh;
 }

@@ -1,0 +1,20 @@
+<h1>{{duty.name}} - Add Duty</h1>
+<form class="input-form" #form="ngForm" (ngSubmit)="addDuty()">
+  <label for="rank">Rank</label>
+  <input id="rank" name="rank" #rank="ngModel" required [(ngModel)]="duty.rank" type="text" placeholder="Ex: 1LT" />
+  <div class="input-error-message" *ngIf="rank.invalid && rank.touched">Rank is required.</div>
+  <label for="title">Title</label>
+  <input id="title" name="title" #title="ngModel" required [(ngModel)]="duty.dutyTitle" type="text" placeholder="Ex: Commander" />
+  <div class="input-error-message" *ngIf="title.invalid && title.touched">Title is required.</div>
+  <label for="start-date">Start Date</label>
+  <input id="start-date" name="start-date" 
+    #startDate="ngModel" 
+    required 
+    [(ngModel)]="duty.dutyStartDate" 
+    type="date" />
+  <div class="input-error-message" *ngIf="startDate.invalid && startDate.touched">A start date is required.</div>
+  <button type="submit" class="btn" [disabled]="form.invalid">Submit</button>
+</form>
+<div class="error-message" *ngIf="showError">
+  An error has occurred: {{ errorMessage }}
+</div>
