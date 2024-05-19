@@ -4,20 +4,21 @@ using StargateAPI.Business.Data;
 
 namespace StargateAPI.Tests;
 public class StargateContextFixture : IDisposable
-{
-    public StargateContext Context { get; }
+{    
+    public DbContextOptions<StargateContext> Options { get; }
 
     public StargateContextFixture()
     {
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
-        var optionsBuilder = new DbContextOptionsBuilder<StargateContext>().UseSqlite(connection);
-        Context = new StargateContext(optionsBuilder.Options);
-        Context.Database.Migrate();
+        Options = new DbContextOptionsBuilder<StargateContext>()
+            .UseSqlite(connection)
+            .Options;        
+        using var context = new StargateContext(Options);
+        context.Database.Migrate();        
     }
 
     public void Dispose()
-    {
-        Context.Dispose();        
+    {        
     }
 }

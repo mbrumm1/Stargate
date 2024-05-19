@@ -1,0 +1,10 @@
+<h1>Change Name For {{name}}</h1>
+<form class="input-form" (ngSubmit)="editPerson()">
+  <label for="name">New Name</label>
+  <input id="name" name="name" #newNameControl="ngModel" required [(ngModel)]="newName" type="text" placeholder="Ex: John Doe" />
+  <div class="input-error-message" *ngIf="newNameControl.invalid && newNameControl.touched">New Name is required.</div>
+  <button type="submit" class="btn" [disabled]="newNameControl.invalid">Submit</button>
+</form>
+<div class="error-message" *ngIf="showError">
+  An error has occurred: {{ errorMessage }}
+</div>

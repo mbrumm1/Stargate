@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddPersonResponse, GetPeopleResponse, GetPersonResponse } from './models';
+import { AddPersonResponse, EditPersonResponse, GetPeopleResponse, GetPersonResponse } from './models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,16 @@ export class PersonService {
   addPerson(name: string): Observable<AddPersonResponse> {
     return this.http.post<AddPersonResponse>(
       this.url, JSON.stringify(name), {
+        headers: new HttpHeaders({
+          "Content-Type": "application/json"
+        })
+      });
+  }
+
+  editPerson(name: string, newName: string) {
+    const url = `${this.url}/${name}`;
+    return this.http.put<EditPersonResponse>(
+      url, JSON.stringify(newName), {
         headers: new HttpHeaders({
           "Content-Type": "application/json"
         })

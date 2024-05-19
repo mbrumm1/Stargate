@@ -25,6 +25,9 @@ export interface AddPersonResponse extends ApiResponse {
   id: number;
 }
 
+export interface EditPersonResponse extends ApiResponse {  
+}
+
 export interface AstronautDuty {
   id: number;
   personId: number;

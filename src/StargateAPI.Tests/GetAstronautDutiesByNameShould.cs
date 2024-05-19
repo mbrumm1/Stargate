@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
 using StargateAPI.Business.Queries;
 
 namespace StargateAPI.Tests;
 public class GetAstronautDutiesByNameShould : IClassFixture<StargateContextFixture>
 {
-    private readonly StargateContext _context;
-    private readonly GetAstronautDutiesByNameHandler _handler;
+    private readonly DbContextOptions<StargateContext> _options;
 
     public GetAstronautDutiesByNameShould(StargateContextFixture fixture)
     {
-        _context = fixture.Context;
-        _handler = new GetAstronautDutiesByNameHandler(_context);
+        _options = fixture.Options;        
     }
 
 
@@ -20,9 +19,11 @@ public class GetAstronautDutiesByNameShould : IClassFixture<StargateContextFixtu
     {
         // Arrange                
         var request = new GetAstronautDutiesByName() { Name = string.Empty };
+        var context = new StargateContext(_options);
+        var handler = new GetAstronautDutiesByNameHandler(context);
         // Act and Assert
         await Assert.ThrowsAsync<BadHttpRequestException>(
-            async () => await _handler.Handle(request, new CancellationToken()));
+            async () => await handler.Handle(request, new CancellationToken()));
     }
 
     [Fact]
@@ -31,8 +32,10 @@ public class GetAstronautDutiesByNameShould : IClassFixture<StargateContextFixtu
         // Arrange
         string name = "John Doe";
         var request = new GetAstronautDutiesByName() { Name = name };
+        var context = new StargateContext(_options);
+        var handler = new GetAstronautDutiesByNameHandler(context);
         // Act
-        var result = await _handler.Handle(request, new CancellationToken());
+        var result = await handler.Handle(request, new CancellationToken());
         // Assert
         Assert.Equal(200, result.ResponseCode);
         Assert.Equal(name, result.Person.Name);
