@@ -45,12 +45,11 @@
   <tbody>
     @for (person of people; track person.name) {
     <tr>
-      <td>{{person.name}}</td>
+      <td><a [routerLink]="['/person', person.name]">{{person.name}}</a></td>
       <td>{{person.currentRank}}</td>
       <td>{{person.currentDutyTitle}}</td>
       <td>{{person.careerStartDate | date }}</td>
-      <td>{{person.careerEndDate | date }}</td>
-      <td><a [routerLink]="['/person', person.name]">View</a></td>
+      <td>{{person.careerEndDate | date }}</td>      
     </tr>
     }
   </tbody>

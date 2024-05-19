@@ -3,6 +3,8 @@ using StargateAPI.Business.Commands;
 using StargateAPI.Business.Data;
 using Serilog;
 using Serilog.Events;
+using StargateAPI;
+using StargateAPI.Business.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,7 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.AddRequestPreProcessor<CreatePersonPreProcessor>();
     cfg.AddRequestPreProcessor<CreateAstronautDutyPreProcessor>();
+    cfg.AddOpenBehavior(typeof(LoggingBehavior<,>));
     cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly);
 });
 
@@ -58,6 +61,8 @@ app.UseCors("AllowClient");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<BadHttpRequestExceptionMiddleware>();
 
 app.Run();
 

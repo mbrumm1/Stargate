@@ -27,7 +27,7 @@ namespace StargateAPI.Business.Queries
 
             var result = new GetAstronautDutiesByNameResult();
 
-            var query = $@"
+            var query = $"""
                 SELECT 
                     a.Id as PersonId, 
                     a.Name, 
@@ -37,19 +37,20 @@ namespace StargateAPI.Business.Queries
                     b.CareerEndDate 
                 FROM [Person] a 
                 LEFT JOIN [AstronautDetail] b 
-                    on b.PersonId = a.Id WHERE a.Name = @Name";
+                    on b.PersonId = a.Id WHERE a.Name = @Name;
+                """;
 
             var people = await _context.People.ToListAsync();
             var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query, new { request.Name });
 
             if (person is null)
             {
-                throw new BadHttpRequestException("Bad Request");
+                throw new BadHttpRequestException($"Person with name \"{request.Name}\" not found.");
             }
 
             result.Person = person;
 
-            query = $@"
+            query = $"""
                 SELECT 
                     Id,
                     PersonId,
@@ -59,7 +60,8 @@ namespace StargateAPI.Business.Queries
                     DutyEndDate
                 FROM [AstronautDuty] 
                 WHERE PersonId = @PersonId
-                ORDER BY DutyStartDate DESC";
+                ORDER BY DutyStartDate DESC;
+                """;
 
             var duties = await _context.Connection.QueryAsync<AstronautDuty>(query, new { person.PersonId });
             result.AstronautDuties = duties.ToList();
