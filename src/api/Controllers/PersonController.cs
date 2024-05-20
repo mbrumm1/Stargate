@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using StargateAPI.Business.Commands;
 using StargateAPI.Business.Queries;
 using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Xml.Linq;
 
 namespace StargateAPI.Controllers
 {

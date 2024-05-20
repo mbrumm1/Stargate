@@ -39,20 +39,18 @@ namespace StargateAPI.Business.Commands
 
         public async Task<CreatePersonResult> Handle(CreatePerson request, CancellationToken cancellationToken)
         {
+            var newPerson = new Person()
+            {
+                Name = request.Name
+            };
 
-                var newPerson = new Person()
-                {
-                   Name = request.Name
-                };
+            _context.People.Add(newPerson);
+            await _context.SaveChangesAsync();
 
-                _context.People.Add(newPerson);
-                await _context.SaveChangesAsync();
-
-                return new CreatePersonResult()
-                {
-                    Id = newPerson.Id
-                };
-          
+            return new CreatePersonResult()
+            {
+                Id = newPerson.Id
+            };
         }
     }
 

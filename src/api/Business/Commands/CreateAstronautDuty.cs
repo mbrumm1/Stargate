@@ -134,6 +134,7 @@ namespace StargateAPI.Business.Commands
                     DutyEndDate 
                 FROM [AstronautDuty] 
                 WHERE PersonId = @Id
+                    AND DutyEndDate IS NULL
                 ORDER BY DutyStartDate DESC
                 LIMIT 1;
                 """;

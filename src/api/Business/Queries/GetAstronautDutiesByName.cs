@@ -1,10 +1,8 @@
 ﻿using Dapper;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using StargateAPI.Business.Data;
 using StargateAPI.Business.Dtos;
 using StargateAPI.Controllers;
-using System.Runtime.InteropServices;
 
 namespace StargateAPI.Business.Queries
 {
@@ -40,7 +38,6 @@ namespace StargateAPI.Business.Queries
                     on b.PersonId = a.Id WHERE a.Name = @Name;
                 """;
 
-            var people = await _context.People.ToListAsync();
             var person = await _context.Connection.QueryFirstOrDefaultAsync<PersonAstronaut>(query, new { request.Name });
 
             if (person is null)
