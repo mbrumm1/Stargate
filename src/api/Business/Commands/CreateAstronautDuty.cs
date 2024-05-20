@@ -64,7 +64,7 @@ namespace StargateAPI.Business.Commands
 
             if (lastDuty is not null && request.DutyStartDate < lastDuty.DutyStartDate)
             {                
-                throw new BadHttpRequestException("New duties must have start date greater than or equal to the most recent duty.");                
+                throw new BadHttpRequestException("New duties must have a start date greater than or equal to the most recent duty.");                
             }
 
             await Task.CompletedTask;

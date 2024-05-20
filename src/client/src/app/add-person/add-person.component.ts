@@ -13,27 +13,27 @@ import { CommonModule } from '@angular/common';
 })
 export class AddPersonComponent {
   name: string = "";
-  errorOccurred: boolean = false;
+  showError: boolean = false;
   errorMessage: string = "";
 
   constructor(private personService: PersonService, private router: Router) {
   }
 
   addPerson() {
-    this.errorOccurred = false;
+    this.showError = false;
     if (confirm(`Are you sure you want to add a person named "${this.name}"?`)) {
       this.personService.addPerson(this.name)
         .subscribe({
           // TODO: nagivate to person details page instead
           next: (response) => {
             if (!response.success) {
-              this.errorOccurred = true;              
+              this.showError = true;              
               return;
             }
             this.router.navigate(["/people"])
           },
           error: (response) => { 
-            this.errorOccurred = true;
+            this.showError = true;
             this.errorMessage = response.error.message;
           }
         });

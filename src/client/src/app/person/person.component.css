@@ -1,9 +1,3 @@
-:host {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-}
-
 .person {
   list-style: none;
   display: flex;
@@ -39,7 +33,7 @@
   .person-name {
     text-align: center;
   }
-  
+
   .profile-info-items {
     flex-direction: column;
     gap: 0.25rem;
@@ -64,7 +58,7 @@
 }
 
 .astronaut-duties {
-  /* width: 100%; */
+  width: 100%;
 }
 
 @media screen and (max-width: 492px) {

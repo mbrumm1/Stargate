@@ -1,4 +1,4 @@
-<div class="person">
+<div class="person mb-4">
   <div class="profile-image"></div>
   <div class="profile-info">
     <h3 class="person-name">{{person.name}} 
@@ -26,7 +26,7 @@
   </div>
 </div>
 <h3>Astronaut Duties</h3>
-<a [routerLink]="['/add-duty', person.name]">Add Duty</a>
+<a class="btn btn-link mtb-4" [routerLink]="['/add-duty', person.name]">Add Duty</a>
 <table class="astronaut-duties table-striped">
   <thead>
     <tr>

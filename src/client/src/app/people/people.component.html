@@ -1,38 +1,6 @@
 <h1>People</h1>
-<a class="btn" routerLink="/add-person">Add New Person</a>
-<!-- <ul class="people">
-  @for (person of people; track person.personId) {
-  <li class="person">
-    <div class="profile-image"></div>
-    <div class="profile-info">
-      <h3 class="person-name">{{person.name}}</h3>
-      @if (person.currentDutyTitle.length > 0) {
-      <div class="profile-info-items">
-        <div class="astronaut-item">
-          <div class="bold">Rank</div>
-          <div>{{person.currentRank}}</div>
-        </div>
-        <div class="astronaut-item">
-          <div class="bold">Title</div>
-          <div>{{person.currentDutyTitle}}</div>
-        </div>
-        <div class="astronaut-item">
-          <div class="bold">Career Start Date</div>
-          <div>{{person.careerStartDate | date }}</div>
-        </div>
-        <div class="astronaut-item">
-          <div class="bold">Career End Date</div>
-          <div>{{person.careerEndDate}}</div>
-        </div>
-      </div>
-      }
-      <a [routerLink]="['/person', person.name]">View</a>
-    </div>
-  </li>
-  }
-</ul> -->
-
-<table class="table-striped">
+<a class="btn btn-link mtb-4" routerLink="/add-person">Add New Person</a>
+<table class="people table-striped">
   <thead>
     <tr>
       <th>Name</th>

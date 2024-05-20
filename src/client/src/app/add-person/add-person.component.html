@@ -5,6 +5,6 @@
   <div class="input-error-message" *ngIf="nameControl.invalid && nameControl.touched">Name is required.</div>
   <button type="submit" class="btn" [disabled]="nameControl.invalid">Submit</button>
 </form>
-<div class="error-message" *ngIf="errorOccurred">
+<div class="error-message" *ngIf="showError">
   An error has occurred: {{ errorMessage }}
 </div>

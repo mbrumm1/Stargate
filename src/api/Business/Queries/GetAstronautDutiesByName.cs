@@ -60,7 +60,7 @@ namespace StargateAPI.Business.Queries
                     DutyEndDate
                 FROM [AstronautDuty] 
                 WHERE PersonId = @PersonId
-                ORDER BY DutyStartDate DESC;
+                ORDER BY DutyStartDate DESC, DutyEndDate;
                 """;
 
             var duties = await _context.Connection.QueryAsync<AstronautDuty>(query, new { person.PersonId });

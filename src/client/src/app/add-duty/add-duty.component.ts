@@ -36,9 +36,15 @@ export class AddDutyComponent {
   }
 
   addDuty() {
+    if (confirm(`Are you sure you want to add this duty for ${this.duty.name}?`))
     this.astronautService.addDuty(this.duty)
-      .subscribe(response => {
-        this.router.navigate(["/person", this.duty.name])
+      .subscribe({
+        next: () => this.router.navigate(["/person", this.duty.name]),
+        error: (err) => {
+          console.log(err);
+          this.showError = true;
+          this.errorMessage = err.error.message;
+        }
       });
   }
 }
